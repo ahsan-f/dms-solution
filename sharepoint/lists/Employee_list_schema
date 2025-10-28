@@ -1,0 +1,38 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Employee List",
+    "type": "object",
+    "properties": {
+        "EmployeeID": {
+            "type": "integer"
+        },
+        "EmployeeName": {
+            "type": "string"
+        },
+        "Email": {
+            "type": "string",
+            "format": "email"
+        },
+        "Department": {
+            "type": "string"
+        },
+        "Manager": {
+            "type": "string"
+        },
+        "TravelApprover": {
+            "type": "string"
+        },
+        "FinanceApprover": {
+            "type": "string"
+        },
+        "IsApprover": {
+            "type": "boolean"
+        }
+    },
+    "required": [
+        "EmployeeID",
+        "EmployeeName",
+        "Email",
+        "Department"
+    ]
+}
