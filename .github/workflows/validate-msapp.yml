@@ -3,7 +3,7 @@ name: Validate Power Apps .msapp File
 on:
   push:
     paths:
-      - apps/*.msapp
+      - powerapps/DMSExpenseApp.msapp
   workflow_dispatch:
 
 jobs:
@@ -13,4 +13,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Validate .msapp structure
-        run: unzip -l apps/*.msapp || echo 'Invalid .msapp file structure'
+        run: unzip -l powerapps/DMSExpenseApp.msapp || echo 'Invalid .msapp file structure'
