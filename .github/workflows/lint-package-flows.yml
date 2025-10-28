@@ -3,7 +3,7 @@ name: Lint and Package Power Automate Flows
 on:
   push:
     paths:
-      - flows/*.json
+      - powerautomate/*.json
   workflow_dispatch:
 
 jobs:
@@ -13,6 +13,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Lint JSON files
-        run: for file in flows/*.json; do jq empty "$file" || exit 1; done
+        run: for file in powerautomate/*.json; do jq empty "$file" || exit 1; done
       - name: Package flows
-        run: zip -r flows_export.zip flows/
+        run: zip -r flows_export.zip powerautomate/
