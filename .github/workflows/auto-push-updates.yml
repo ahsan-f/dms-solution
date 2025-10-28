@@ -15,7 +15,7 @@ jobs:
       - name: Configure Git
         run: |
           git config user.name 'ahsan-f'
-          git config user.email 'github-actions@github.com'
+          git config user.email 'ahsan.farooqui2001@gmail.com'
       - name: Commit and Push Changes
         run: |
           git add .
