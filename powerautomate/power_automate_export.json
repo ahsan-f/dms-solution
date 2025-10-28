@@ -1,0 +1,47 @@
+{
+    "flow_name": "ExpenseWorkflow",
+    "trigger": {
+        "type": "SharePoint",
+        "action": "When an item is created",
+        "list": "Expense Reports"
+    },
+    "switch": {
+        "expression": "triggerBody()?['DocumentType']?['Value']",
+        "cases": {
+            "Standard Expense": "Standard Approval Scope",
+            "Travel Request": "Travel Approval Scope",
+            "CAPEX": "CAPEX Approval Scope"
+        }
+    },
+    "CAPEX Approval Scope": {
+        "steps": [
+            {
+                "action": "Get Manager",
+                "type": "Office 365 Users",
+                "input": "SubmitterID"
+            },
+            {
+                "action": "Start Approval",
+                "type": "Approvals",
+                "assign_to": "ManagerEmail"
+            },
+            {
+                "action": "Condition",
+                "expression": "TotalAmount > 5000",
+                "if_yes": {
+                    "action": "Start Approval",
+                    "assign_to": "FinanceDirector"
+                },
+                "if_no": {
+                    "action": "Update Item",
+                    "status": "Approved"
+                }
+            },
+            {
+                "action": "Create Item",
+                "list": "Approval History",
+                "details": "Log approval outcome"
+            }
+        ]
+    }
+}
