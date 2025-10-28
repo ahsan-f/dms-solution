@@ -3,8 +3,8 @@ name: Auto Push Updates
 on:
   push:
     paths:
-      - flows/**
-      - apps/**
+      - powerautomate/**
+      - powerapps/**
 
 jobs:
   auto-push:
