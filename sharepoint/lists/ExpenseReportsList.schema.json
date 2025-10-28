@@ -1,0 +1,47 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Expense Reports List",
+    "type": "object",
+    "properties": {
+        "ReportID": {
+            "type": "integer"
+        },
+        "SubmitterID": {
+            "type": "string"
+        },
+        "DocumentType": {
+            "type": "string",
+            "enum": [
+                "Standard Expense",
+                "Travel Request",
+                "CAPEX",
+                "Refund Request"
+            ]
+        },
+        "TotalAmount": {
+            "type": "number"
+        },
+        "Status": {
+            "type": "string",
+            "enum": [
+                "Pending Manager",
+                "Pending Finance",
+                "Approved",
+                "Rejected"
+            ]
+        },
+        "CurrentApproverID": {
+            "type": "string"
+        },
+        "DeptHeadApprover": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "ReportID",
+        "SubmitterID",
+        "DocumentType",
+        "TotalAmount",
+        "Status"
+    ]
+}

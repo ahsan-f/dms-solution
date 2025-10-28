@@ -1,0 +1,26 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Document Type List",
+    "type": "object",
+    "properties": {
+        "DocumentTypeID": {
+            "type": "integer"
+        },
+        "DocumentTypeName": {
+            "type": "string",
+            "enum": [
+                "Standard Expense",
+                "Capital Expenditure",
+                "Travel Request",
+                "Refund Request"
+            ]
+        },
+        "RequiresApprovalRouting": {
+            "type": "boolean"
+        }
+    },
+    "required": [
+        "DocumentTypeID",
+        "DocumentTypeName"
+    ]
+}

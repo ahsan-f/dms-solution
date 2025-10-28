@@ -1,0 +1,38 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Approval Rules List",
+    "type": "object",
+    "properties": {
+        "RuleID": {
+            "type": "integer"
+        },
+        "DocumentType": {
+            "type": "string"
+        },
+        "MinAmount": {
+            "type": "number"
+        },
+        "MaxAmount": {
+            "type": "number"
+        },
+        "RequiredApproverRole": {
+            "type": "string",
+            "enum": [
+                "Department Head",
+                "Finance Director",
+                "VP of Operations"
+            ]
+        },
+        "NextStepApproverID": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "RuleID",
+        "DocumentType",
+        "MinAmount",
+        "MaxAmount",
+        "RequiredApproverRole",
+        "NextStepApproverID"
+    ]
+}

@@ -1,0 +1,26 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Expense Line Items List",
+    "type": "object",
+    "properties": {
+        "ReportID": {
+            "type": "integer"
+        },
+        "Date": {
+            "type": "string",
+            "format": "date"
+        },
+        "Amount": {
+            "type": "number"
+        },
+        "Description": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "ReportID",
+        "Date",
+        "Amount",
+        "Description"
+    ]
+}
