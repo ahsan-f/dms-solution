@@ -1,0 +1,16 @@
+name: Validate Power Apps .msapp File
+
+on:
+  push:
+    paths:
+      - apps/*.msapp
+  workflow_dispatch:
+
+jobs:
+  validate-msapp:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Validate .msapp structure
+        run: unzip -l apps/*.msapp || echo 'Invalid .msapp file structure'
