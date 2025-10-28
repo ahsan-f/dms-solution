@@ -1,0 +1,63 @@
+{
+    "screen": "ExpenseSubmissionScreen",
+    "components": {
+        "FormExpenseHeader": {
+            "type": "Form",
+            "fields": [
+                "ReportID",
+                "SubmitterID",
+                "DocumentType",
+                "TotalAmount",
+                "Status",
+                "CurrentApproverID",
+                "DeptHeadApprover"
+            ],
+            "submit_action": "SubmitForm(FormExpenseHeader)"
+        },
+        "LineItemsCollection": {
+            "type": "Collection",
+            "name": "colLineItems",
+            "patch_action": {
+                "target": "Expense Line Items",
+                "fields": [
+                    "ReportID",
+                    "DateInput",
+                    "AmountInput",
+                    "DescriptionInput"
+                ]
+            }
+        },
+        "SubmitButton": {
+            "type": "Button",
+            "on_select": [
+                "SubmitForm(FormExpenseHeader)",
+                "Set(varNewReportID, FormExpenseHeader.LastSubmit.ID)",
+                {
+                    "ForAll": {
+                        "Collection": "colLineItems",
+                        "Patch": {
+                            "List": "Expense Line Items",
+                            "Defaults": true,
+                            "Fields": {
+                                "ReportID": "varNewReportID",
+                                "Date": "ThisRecord.DateInput",
+                                "Amount": "ThisRecord.AmountInput",
+                                "Description": "ThisRecord.DescriptionInput"
+                            }
+                        }
+                    }
+                },
+                {
+                    "RunFlow": {
+                        "FlowName": "ExpenseWorkflowStart",
+                        "Parameters": {
+                            "ReportID": "varNewReportID",
+                            "DocumentType": "DropdownDocumentType.Selected.Value"
+                        }
+                    }
+                },
+                "Navigate(ScreenSuccess)"
+            ]
+        }
+    }
+}
