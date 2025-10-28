@@ -1,0 +1,105 @@
+{
+    "name": "DMSExpenseWorkflow",
+    "description": "Automated approval workflow for expense reports with dynamic routing based on document type and amount thresholds.",
+    "trigger": {
+        "type": "SharePoint",
+        "action": "When an item is created",
+        "listName": "Expense Reports"
+    },
+    "actions": [
+        {
+            "type": "Switch",
+            "expression": "triggerBody()?['DocumentType']?['Value']",
+            "cases": {
+                "Standard Expense": {
+                    "steps": [
+                        {
+                            "action": "Get Manager",
+                            "type": "Office 365 Users",
+                            "input": "SubmitterID"
+                        },
+                        {
+                            "action": "Start Approval",
+                            "type": "Approvals",
+                            "assignTo": "ManagerEmail"
+                        },
+                        {
+                            "action": "Update Item",
+                            "type": "SharePoint",
+                            "status": "Approved"
+                        },
+                        {
+                            "action": "Create Item",
+                            "type": "SharePoint",
+                            "list": "Approval History",
+                            "details": "Log approval outcome"
+                        }
+                    ]
+                },
+                "Travel Request": {
+                    "steps": [
+                        {
+                            "action": "Get Travel Approver",
+                            "type": "SharePoint Lookup",
+                            "input": "SubmitterID"
+                        },
+                        {
+                            "action": "Start Approval",
+                            "type": "Approvals",
+                            "assignTo": "TravelApproverEmail"
+                        },
+                        {
+                            "action": "Update Item",
+                            "type": "SharePoint",
+                            "status": "Approved"
+                        },
+                        {
+                            "action": "Create Item",
+                            "type": "SharePoint",
+                            "list": "Approval History",
+                            "details": "Log approval outcome"
+                        }
+                    ]
+                },
+                "CAPEX": {
+                    "steps": [
+                        {
+                            "action": "Get Manager",
+                            "type": "Office 365 Users",
+                            "input": "SubmitterID"
+                        },
+                        {
+                            "action": "Start Approval",
+                            "type": "Approvals",
+                            "assignTo": "ManagerEmail"
+                        },
+                        {
+                            "action": "Condition",
+                            "expression": "TotalAmount > 5000",
+                            "ifYes": [
+                                {
+                                    "action": "Start Approval",
+                                    "type": "Approvals",
+                                    "assignTo": "FinanceDirector"
+                                }
+                            ],
+                            "ifNo": [
+                                {
+                                    "action": "Update Item",
+                                    "type": "SharePoint",
+                                    "status": "Approved"
+                                }
+                            ]
+                        },
+                        {
+                            "action": "Create Item",
+                            "type": "SharePoint",
+                            "list": "Approval History",
+                            "details": "Log approval outcome"
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}
