@@ -5,7 +5,7 @@ on:
     paths:
       - powerautomate/**
       - powerapps/**
-
+  workflow_dispatch:
 jobs:
   auto-push:
     runs-on: ubuntu-latest
